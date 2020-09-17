@@ -1,12 +1,8 @@
 {
-  "name": "ethereum-demo-tools",
-  "description": "Useful tool info and examples for learning to write Ethereum smart-contracts, to accompany my BlockGeeks article",
-  "dependencies": {
-    "truffle": "^3.2.1"
+  "name": "solidity-guestbook-example",
+  "description": "A simple guestbook dapp for the ethereum blockchain",
+  "peer-dependencies": {
+    "truffle": "^5.1.11"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Tectract/ethereum-demo-tools.git"
-  },
-  "author": "Ryan Molecke"
+  "author": "ab22uhrnachtunruhe@gmail.com"
 }
