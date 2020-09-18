@@ -1,0 +1,17 @@
+{
+  "name": "guestbook-dapp",
+  "version": "1.0.3",
+  "description": "A guestbook decentralized app for ethereum",
+  "author": "ab22uhrnachtunruhe@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "develop": "yarn truffle develop --log",
+    "compile": "yarn truffle compile",
+    "test": "yarn docker yarn truffle test",
+    "docker": "CURRENT_UID=$(id -u):$(id -g) docker-compose run --workdir='/home/node/dapp' runner",
+    "migrate": "yarn truffle migrate"
+  },
+  "devDependencies": {
+    "truffle": "^5.1.45"
+  }
+}

@@ -1,0 +1,16 @@
+version: '3.2'
+services:
+  ganache:
+    image: trufflesuite/ganache-cli:v6.10.2
+    ports:
+      - 8545:8545
+  runner:
+    environment:
+      NODE_OPTIONS: --max-old-space-size=8192
+    image: node:12
+    user: ${CURRENT_UID}
+    working_dir: /home/node
+    volumes:
+      - ./:/home/node
+    depends_on:
+      - ganache

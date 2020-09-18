@@ -3,7 +3,12 @@ module.exports = {
     develop: {
       host: "localhost",
       port: 9545,
-      network_id: "*" // set to low number so deployment works?
-    }
+      network_id: "*"
+    },
+    test: {
+      host: 'ganache',
+      port: 8545,
+      network_id: '*',
+    },
   }
 };
