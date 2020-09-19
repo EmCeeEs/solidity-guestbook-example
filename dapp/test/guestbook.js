@@ -1,5 +1,6 @@
+const { assert } = require("./setup")
+
 const Guestbook = artifacts.require("Guestbook")
-const { assert }  = require("./setup")
 
 const USER_1 = ['Nicname23', 'Berlin', 'Berlin', 'Germany']
 const USER_2 = ['Bobby', 'Colonge', 'NRW', 'Germany']

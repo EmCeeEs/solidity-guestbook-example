@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.22 <0.8.0;
+pragma solidity ^0.5;
+pragma experimental ABIEncoderV2;
 
 contract Guestbook {
     address admin = msg.sender;
@@ -11,7 +12,7 @@ contract Guestbook {
     address[] usersByAddress;
 
     struct notarizedImage {
-        string imageURL;
+        string imageUrl;
         uint256 timeStamp;
     }
 
@@ -29,7 +30,7 @@ contract Guestbook {
     }
 
     function _indexOf(address badUser, address[] storage accounts)
-        private
+        internal
         view
         returns (uint256 badUserIndex)
     {
@@ -41,7 +42,7 @@ contract Guestbook {
     }
 
     function _indexOf(bytes32 badImage, bytes32[] storage images)
-        private
+        internal
         view
         returns (uint256 badUserIndex)
     {
@@ -57,7 +58,8 @@ contract Guestbook {
 
         // swap and delete last
         uint256 badUserIndex = _indexOf(badUser, usersByAddress);
-        usersByAddress[badUserIndex] = usersByAddress[usersByAddress.length-1];
+        uint256 lastIndex = usersByAddress.length - 1;
+        usersByAddress[badUserIndex] = usersByAddress[lastIndex];
         usersByAddress.length--;
     }
 
@@ -66,8 +68,17 @@ contract Guestbook {
 
         // swap and delete last
         uint256 badImageIndex = _indexOf(badImage, imagesByNotaryHash);
-        imagesByNotaryHash[badImageIndex] = imagesByNotaryHash[imagesByNotaryHash.length-1];
+        uint256 lastIndex = imagesByNotaryHash.length - 1;
+        imagesByNotaryHash[badImageIndex] = imagesByNotaryHash[lastIndex];
         imagesByNotaryHash.length--;
+    }
+
+    function _isEmpty(string memory s) internal pure returns (bool) {
+        return bytes(s).length == 0;
+    }
+
+    function _isUser(address user) internal view returns (bool) {
+        return bytes(Users[user].handle).length != 0;
     }
 
     function registerNewUser(
@@ -75,75 +86,37 @@ contract Guestbook {
         string memory city,
         string memory state,
         string memory country
-    ) public returns (bool success) {
-        address thisNewAddress = msg.sender;
+    ) public {
+        require(!_isEmpty(handle));
+        require(!_isUser(msg.sender));
 
-        if (
-            bytes(Users[msg.sender].handle).length == 0 &&
-            bytes(handle).length != 0
-        ) {
-            Users[thisNewAddress].handle = handle;
-            Users[thisNewAddress].city = city;
-            Users[thisNewAddress].state = state;
-            Users[thisNewAddress].country = country;
+        Users[msg.sender].handle = handle;
+        Users[msg.sender].city = city;
+        Users[msg.sender].state = state;
+        Users[msg.sender].country = country;
 
-            usersByAddress.push(thisNewAddress);
-            return true;
-        } else {
-            return false;
-        }
+        usersByAddress.push(msg.sender);
     }
 
-    function addImageToUser(string memory imageURL, bytes32 SHA256notaryHash)
+    function addImageToUser(string memory imageUrl, bytes32 SHA256notaryHash)
         public
-        returns (bool success)
     {
-        address thisNewAddress = msg.sender;
-        if (bytes(Users[thisNewAddress].handle).length != 0) {
-            // make sure this user has created an account first
-            if (bytes(imageURL).length != 0) {
-                // ) {  // couldn't get bytes32 null check to work, oh well!
-                // prevent users from fighting over sha->image listings in the whitepages, but still allow them to add a personal ref to any sha
-                if (
-                    bytes(notarizedImages[SHA256notaryHash].imageURL).length ==
-                    0
-                ) {
-                    imagesByNotaryHash.push(SHA256notaryHash); // adds entry for this image to our image whitepages
-                }
-                notarizedImages[SHA256notaryHash].imageURL = imageURL;
-                notarizedImages[SHA256notaryHash].timeStamp = block.timestamp; // note that updating an image also updates the timestamp
-                Users[thisNewAddress].myImages.push(SHA256notaryHash); // add the image hash to this users .myImages array
-                return true;
-            } else {
-                return false; // either imageURL or SHA256notaryHash was null, couldn't store image
-            }
-        } else {
-            return false; // user didn't have an account yet, couldn't store image
-        }
+        require(!_isEmpty(imageUrl));
+        require(_isUser(msg.sender));
+
+        notarizedImages[SHA256notaryHash].imageUrl = imageUrl;
+        notarizedImages[SHA256notaryHash].timeStamp = block.timestamp;
+
+        imagesByNotaryHash.push(SHA256notaryHash);
+        Users[msg.sender].myImages.push(SHA256notaryHash);
     }
 
     function getUsers() public view returns (address[] memory) {
         return usersByAddress;
     }
 
-    function getUser(address userAddress)
-        public
-        view
-        returns (
-            string memory,
-            string memory,
-            string memory,
-            string memory,
-            bytes32[] memory
-        )
-    {
-        return (
-            Users[userAddress].handle,
-            Users[userAddress].city,
-            Users[userAddress].state,
-            Users[userAddress].country,
-            Users[userAddress].myImages
-        );
+    function getUser(address userAddress) public view returns (User memory) {
+        return Users[userAddress];
     }
 
     function getAllImages() public view returns (bytes32[] memory) {
@@ -161,11 +134,8 @@ contract Guestbook {
     function getImage(bytes32 SHA256notaryHash)
         public
         view
-        returns (string memory, uint256)
+        returns (notarizedImage memory)
     {
-        return (
-            notarizedImages[SHA256notaryHash].imageURL,
-            notarizedImages[SHA256notaryHash].timeStamp
-        );
+        return notarizedImages[SHA256notaryHash];
     }
 }
