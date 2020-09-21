@@ -77,7 +77,11 @@ contract Guestbook {
         return bytes(s).length == 0;
     }
 
-    function _isUser(address user) internal view returns (bool) {
+    function _isEmpty(bytes32 b) internal pure returns (bool) {
+        return b.length == 0;
+    }
+
+    function _isRegisteredUser(address user) internal view returns (bool) {
         return bytes(Users[user].handle).length != 0;
     }
 
@@ -88,7 +92,7 @@ contract Guestbook {
         string memory country
     ) public {
         require(!_isEmpty(handle));
-        require(!_isUser(msg.sender));
+        require(!_isRegisteredUser(msg.sender));
 
         Users[msg.sender].handle = handle;
         Users[msg.sender].city = city;
@@ -102,7 +106,8 @@ contract Guestbook {
         public
     {
         require(!_isEmpty(imageUrl));
-        require(_isUser(msg.sender));
+        require(!_isEmpty(SHA256notaryHash));
+        require(_isRegisteredUser(msg.sender));
 
         notarizedImages[SHA256notaryHash].imageUrl = imageUrl;
         notarizedImages[SHA256notaryHash].timeStamp = block.timestamp;
