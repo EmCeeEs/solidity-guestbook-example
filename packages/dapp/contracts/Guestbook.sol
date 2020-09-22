@@ -5,13 +5,13 @@ pragma experimental ABIEncoderV2;
 contract Guestbook {
     address admin = msg.sender;
 
-    mapping(bytes32 => notarizedImage) notarizedImages;
+    mapping(bytes32 => NotarizedImage) notarizedImages;
     bytes32[] imagesByNotaryHash;
 
-    mapping(address => User) Users;
+    mapping(address => User) users;
     address[] usersByAddress;
 
-    struct notarizedImage {
+    struct NotarizedImage {
         string imageUrl;
         uint256 timeStamp;
     }
@@ -54,7 +54,7 @@ contract Guestbook {
     }
 
     function removeUser(address badUser) public onlyAdmin {
-        delete Users[badUser];
+        delete users[badUser];
 
         // swap and delete last
         uint256 badUserIndex = _indexOf(badUser, usersByAddress);
@@ -82,7 +82,7 @@ contract Guestbook {
     }
 
     function _isRegisteredUser(address user) internal view returns (bool) {
-        return bytes(Users[user].handle).length != 0;
+        return bytes(users[user].handle).length != 0;
     }
 
     function registerNewUser(
@@ -94,10 +94,10 @@ contract Guestbook {
         require(!_isEmpty(handle));
         require(!_isRegisteredUser(msg.sender));
 
-        Users[msg.sender].handle = handle;
-        Users[msg.sender].city = city;
-        Users[msg.sender].state = state;
-        Users[msg.sender].country = country;
+        users[msg.sender].handle = handle;
+        users[msg.sender].city = city;
+        users[msg.sender].state = state;
+        users[msg.sender].country = country;
 
         usersByAddress.push(msg.sender);
     }
@@ -109,11 +109,10 @@ contract Guestbook {
         require(!_isEmpty(SHA256notaryHash));
         require(_isRegisteredUser(msg.sender));
 
-        notarizedImages[SHA256notaryHash].imageUrl = imageUrl;
-        notarizedImages[SHA256notaryHash].timeStamp = block.timestamp;
+        notarizedImages[SHA256notaryHash] = NotarizedImage(imageUrl, block.timestamp);
 
         imagesByNotaryHash.push(SHA256notaryHash);
-        Users[msg.sender].myImages.push(SHA256notaryHash);
+        users[msg.sender].myImages.push(SHA256notaryHash);
     }
 
     function getUsers() public view returns (address[] memory) {
@@ -121,7 +120,7 @@ contract Guestbook {
     }
 
     function getUser(address userAddress) public view returns (User memory) {
-        return Users[userAddress];
+        return users[userAddress];
     }
 
     function getAllImages() public view returns (bytes32[] memory) {
@@ -133,13 +132,13 @@ contract Guestbook {
         view
         returns (bytes32[] memory)
     {
-        return Users[userAddress].myImages;
+        return users[userAddress].myImages;
     }
 
     function getImage(bytes32 SHA256notaryHash)
         public
         view
-        returns (notarizedImage memory)
+        returns (NotarizedImage memory)
     {
         return notarizedImages[SHA256notaryHash];
     }
