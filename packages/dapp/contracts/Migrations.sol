@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MPL
+// SPDX-License-Identifier: MPL-2.0
 pragma solidity >=0.4.22 <0.8.0;
 
 contract Migrations {
