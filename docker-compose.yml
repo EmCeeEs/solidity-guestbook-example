@@ -1,6 +1,6 @@
 version: '3.2'
 services:
-  ganache:
+  ganache-docker:
     image: trufflesuite/ganache-cli:v6.10.2
     ports:
       - 8545:8545
@@ -13,4 +13,4 @@ services:
     volumes:
       - ./:/home/node
     depends_on:
-      - ganache
+      - ganache-docker
