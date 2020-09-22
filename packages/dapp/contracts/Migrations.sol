@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MPL
 pragma solidity >=0.4.22 <0.8.0;
 
 contract Migrations {

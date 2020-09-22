@@ -1,9 +1,8 @@
 {
   "name": "@solidity-guestbook-example/dapp",
   "version": "0.1.0",
-  "description": "A decentralized guestbook app for ethereum",
+  "description": "The decentralized backend application.",
   "author": "ab22uhrnachtunruhe@gmail.com",
-  "license": "MIT",
   "scripts": {
     "develop": "yarn truffle develop --log",
     "test": "yarn docker yarn truffle test",
