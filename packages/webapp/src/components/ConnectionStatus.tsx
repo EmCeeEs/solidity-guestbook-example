@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react'
 
 import { createWeb3 } from '../utils/web3'
-import { createDappInterface } from '../utils/dapp'
+import { createDappInterface } from '../utils/dappInterface'
 
 const me = '0xa745b8822FE49EE35344c52f7751dcA72F7fca52'
 

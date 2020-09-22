@@ -1,8 +1,16 @@
 {
-  "name": "webapp",
+  "name": "@solidity-guestbook-example/webapp",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "clean": "rm -rf build"
+  },
   "dependencies": {
+    "@solidity-guestbook-example/dapp": "^0.1.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -18,11 +26,9 @@
     "typescript": "~3.7.2",
     "web3": "^1.3.0"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "@types/classnames": "^2.2.10",
+    "@types/ramda": "^0.27.17"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,9 +44,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/classnames": "^2.2.10",
-    "@types/ramda": "^0.27.17"
   }
 }

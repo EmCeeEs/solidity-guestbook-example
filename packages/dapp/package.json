@@ -1,15 +1,16 @@
 {
-  "name": "guestbook-dapp",
-  "version": "1.0.3",
-  "description": "A guestbook decentralized app for ethereum",
+  "name": "@solidity-guestbook-example/dapp",
+  "version": "0.1.0",
+  "description": "A decentralized guestbook app for ethereum",
   "author": "ab22uhrnachtunruhe@gmail.com",
   "license": "MIT",
   "scripts": {
     "develop": "yarn truffle develop --log",
     "test": "yarn docker yarn truffle test",
-    "docker": "CURRENT_UID=$(id -u):$(id -g) docker-compose run --workdir='/home/node/dapp' runner",
+    "docker": "CURRENT_UID=$(id -u):$(id -g) docker-compose run --workdir='/home/node/packages/dapp' runner",
     "migrate": "yarn truffle migrate",
-    "prebuild": "rm -rf ./build ./dist",
+    "clean": "rm -rf ./build ./dist",
+    "prebuild": "yarn clean",
     "build": "yarn compile && yarn typechain",
     "compile": "yarn truffle compile",
     "typechain": "typechain --outDir ./dist --target=web3-v1 './build/contracts/*.json'"

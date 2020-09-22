@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { createDappInterface } from '../utils/dapp';
+import { createDappInterface } from '../utils/dappInterface';
 import { createWeb3 } from '../utils/web3';
 
 export const Users: FC = () => {

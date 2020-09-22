@@ -1,8 +1,20 @@
 {
   "name": "solidity-guestbook-example",
   "description": "A simple guestbook dapp for the ethereum blockchain",
-  "peer-dependencies": {
-    "truffle": "^5.1.11"
+  "version": "0.1.0",
+  "author": "ab22uhrnachtunruhe@gmail.com",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:EmCeeEs/solidity-guestbook-example.git"
   },
-  "author": "ab22uhrnachtunruhe@gmail.com"
+  "scripts": {
+    "build": "yarn lerna run build",
+    "test": "yarn lerna run test",
+    "clean": "yarn lerna clean && yarn lerna run clean"
+  },
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  }
 }
