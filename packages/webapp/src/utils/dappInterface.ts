@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils'
 
-import { Guestbook } from '@solidity-guestbook-example/dapp/dist/Guestbook'
+import { Guestbook } from '@solidity-guestbook-example/dapp/build/typings/web3/Guestbook'
 import guestbookJson from '@solidity-guestbook-example/dapp/build/contracts/Guestbook.json'
 
 const getGuestbookAbi = (): AbiItem[] => R.prop('abi')(guestbookJson) as AbiItem[]
