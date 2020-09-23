@@ -17,9 +17,8 @@ contract Guestbook {
     }
 
     struct User {
-        string handle;
+        string nickName;
         string city;
-        string state;
         string country;
         bytes32[] myImages;
     }
@@ -82,21 +81,19 @@ contract Guestbook {
     }
 
     function _isRegisteredUser(address user) internal view returns (bool) {
-        return bytes(users[user].handle).length != 0;
+        return bytes(users[user].nickName).length != 0;
     }
 
     function registerNewUser(
-        string memory handle,
+        string memory nickName,
         string memory city,
-        string memory state,
         string memory country
     ) public {
-        require(!_isEmpty(handle));
+        require(!_isEmpty(nickName));
         require(!_isRegisteredUser(msg.sender));
 
-        users[msg.sender].handle = handle;
+        users[msg.sender].nickName = nickName;
         users[msg.sender].city = city;
-        users[msg.sender].state = state;
         users[msg.sender].country = country;
 
         usersByAddress.push(msg.sender);

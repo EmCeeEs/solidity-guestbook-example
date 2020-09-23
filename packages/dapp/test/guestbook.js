@@ -2,8 +2,8 @@ const { assert } = require("./setup")
 
 const Guestbook = artifacts.require("Guestbook")
 
-const USER_1= ['Nicname23', 'Berlin', 'Berlin', 'Germany']
-const USER_2 = ['Bobby', 'Colonge', 'NRW', 'Germany']
+const USER_1 = ['Alice', 'Berlin', 'Germany']
+const USER_2 = ['Bob', 'NYC', 'USA']
 
 const IMAGE_1 = ['http://images.com/1', '0x6c3e007e281f6948b37c511a11e43c8026d2a16a8a45fed4e83379b66b0ab927']
 const IMAGE_2 = ['http://images.com/2', '0x6c3e007e281f6948b37c511a11e43c8026d2a16a8a45fed4e83379b66b0ab928']
