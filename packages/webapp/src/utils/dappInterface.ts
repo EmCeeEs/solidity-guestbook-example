@@ -5,10 +5,18 @@ import { AbiItem } from 'web3-utils'
 import { Guestbook } from '@solidity-guestbook-example/dapp/build/typings/web3/Guestbook'
 import guestbookJson from '@solidity-guestbook-example/dapp/build/contracts/Guestbook.json'
 
+import { User } from '../store/reducer';
+
 const getGuestbookAbi = (): AbiItem[] => R.prop('abi')(guestbookJson) as AbiItem[]
 
 const getGuestbookAddress = (network: number): string =>
   R.path(['networks', R.toString(network), 'address'])(guestbookJson) as string
+
+const createUser = (user: [string, string, string, string[]]): User => ({
+  nickName: user[0],
+  city: user[1],
+  country: user[2],
+})
 
 export const createDappInterface = (web3: Web3) => {
 
@@ -31,8 +39,11 @@ export const createDappInterface = (web3: Web3) => {
 
   const getUsers = async () => {
     const guestbook = await getGuestbook()
-    return guestbook.methods.getUsers().call()
+    const userAddresses = await guestbook.methods.getUsers().call()
+    const users = await Promise.all(userAddresses.map((address) => guestbook.methods.getUser(address).call()))
+    return R.map(createUser, users)
   }
+
 
   return {
     getAccount,
@@ -41,3 +52,5 @@ export const createDappInterface = (web3: Web3) => {
     getUsers,
   }
 }
+
+export type DappInterface = ReturnType<typeof createDappInterface>

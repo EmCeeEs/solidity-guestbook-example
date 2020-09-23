@@ -1,8 +1,9 @@
-# yarn
+# yarn / lerna
 node_modules
 .yarn
 .cache
 yarn-error.log
+lerna-debug.log
 
 # truffle
 .config
