@@ -1,21 +1,18 @@
-import { applyMiddleware, createStore } from 'redux'
-import createSagaMiddleware from 'redux-saga'
+import { applyMiddleware, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
 
-import { users } from './reducer'
-import {rootSaga} from './sagas'
-import { createDappInterface } from '../utils/dappInterface'
-import { createWeb3 } from '../utils/web3'
+import { users } from "./reducer";
+import { rootSaga } from "./sagas";
+import { createDappInterface } from "../utils/dappInterface";
+import { createWeb3 } from "../utils/web3";
 
 export const configureStore = () => {
-  const sagaMiddleware = createSagaMiddleware()
-  const store = createStore(
-    users,
-    applyMiddleware(sagaMiddleware)
-  )
+  const sagaMiddleware = createSagaMiddleware();
+  const store = createStore(users, applyMiddleware(sagaMiddleware));
 
-  const web3 = createWeb3()
-  const dappInterface = createDappInterface(web3)
-  sagaMiddleware.run(rootSaga, dappInterface)
+  const web3 = createWeb3();
+  const dappInterface = createDappInterface(web3);
+  sagaMiddleware.run(rootSaga, dappInterface);
 
-  return store
-}
+  return store;
+};

@@ -1,3 +1,3 @@
-import { User } from './reducer'
+import { User } from "./reducer";
 
-export const getUsers = (state: User[]) => state
+export const getUsers = (state: User[]) => state;
