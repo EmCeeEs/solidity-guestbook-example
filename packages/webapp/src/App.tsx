@@ -5,7 +5,6 @@ import './App.css';
 
 import { configureStore } from './store';
 import { Header } from './components/Header'
-import { Placeholder } from './components/Placeholder';
 import { Users } from './components/Users'
 
 export const App: FC = () => {
@@ -15,7 +14,6 @@ export const App: FC = () => {
       <Header title={"Decentralized Guestbook App"} />
       <main>
         <Users />
-        <Placeholder />
       </main>
     </Provider>
   )

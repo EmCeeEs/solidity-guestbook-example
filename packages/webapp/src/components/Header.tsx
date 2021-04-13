@@ -8,6 +8,6 @@ interface HeaderProps {
 
 export const Header: FC<HeaderProps> = ({ title }) => (
   <header className={classNames(styles.angledHeader)}>
-    <h1 className={classNames(styles.bigWhite)}>{title}</h1>
+    <h1>{title}</h1>
   </header>
 )

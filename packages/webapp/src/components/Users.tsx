@@ -10,12 +10,19 @@ interface UsersProps {
   users: User[]
 }
 
-const UserComp: FC<User> = ({nickName, city, country}) => <p>nic: {nickName}, city: {city} , country: {country}</p>
+const UserComp: FC<User> = ({nickName, city, country}) => (
+    <li>
+        <p>{nickName}, {city}, {country}</p>
+    </li>
+)
 
 const UsersComp: FC<UsersProps> = ({ users }) => {
-  return (<>
-    {users.map(user => <UserComp key={user.nickName} {...user} />)}
-    </>)
+  return (<div style={{textAlign: 'center'}}>
+      <h3>Guests:</h3>
+      <ul>
+          {users.map((user, index) => <UserComp key={index} {...user} />)}
+      </ul>
+    </div>)
 }
 
 

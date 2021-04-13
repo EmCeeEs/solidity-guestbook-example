@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "license": "MPL-2.0",
   "scripts": {
-    "develop": "yarn truffle develop --log",
+    "develop": "yarn truffle develop",
     "test": "yarn docker yarn truffle test",
     "docker": "CURRENT_UID=$(id -u):$(id -g) docker-compose run --workdir='/home/node/packages/dapp' runner",
     "migrate": "yarn truffle migrate",

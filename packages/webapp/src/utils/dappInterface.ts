@@ -12,7 +12,8 @@ const getGuestbookAbi = (): AbiItem[] => R.prop('abi')(guestbookJson) as AbiItem
 const getGuestbookAddress = (network: number): string =>
   R.path(['networks', R.toString(network), 'address'])(guestbookJson) as string
 
-const createUser = (user: [string, string, string, string[]]): User => ({
+type UserOnBlockchain = [string, string, string, string[]]
+const createUser = (user: UserOnBlockchain): User => ({
   nickName: user[0],
   city: user[1],
   country: user[2],
@@ -33,14 +34,14 @@ export const createDappInterface = (web3: Web3) => {
     return (new web3.eth.Contract(
       getGuestbookAbi(),
       getGuestbookAddress(await getNetworkId()),
-      // { from: await getAccount() },
     ) as unknown) as Promise<Guestbook>
   }
 
   const getUsers = async () => {
     const guestbook = await getGuestbook()
     const userAddresses = await guestbook.methods.getUsers().call()
-    const users = await Promise.all(userAddresses.map((address) => guestbook.methods.getUser(address).call()))
+    const users: UserOnBlockchain[] =
+        await Promise.all(userAddresses.map((address: string) => guestbook.methods.getUser(address).call()))
     return R.map(createUser, users)
   }
 
