@@ -17,9 +17,7 @@ const RegistrationFormComp: FC<RegistrationFormProps> = ({ registerUser }) => {
   const register = useCallback(
     event => {
       event.preventDefault();
-      console.log("before", user);
       registerUser(user);
-      console.log("after", user);
     },
     [user, registerUser]
   );
