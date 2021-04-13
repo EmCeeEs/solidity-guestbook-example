@@ -3,7 +3,7 @@ module.exports = {
     develop: {
       host: 'localhost',
       port: 9545,
-      network_id: '*',
+      network_id: "*",
       accounts: 5,
       defaultEtherBalance: 500,
     },

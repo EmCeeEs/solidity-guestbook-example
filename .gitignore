@@ -7,3 +7,6 @@ lerna-debug.log
 
 # truffle
 .config
+
+# IDE
+.idea
