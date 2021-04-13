@@ -4,7 +4,7 @@ module.exports = {
       host: 'localhost',
       port: 9545,
       network_id: "1111",
-      accounts: 5,
+      accounts: 10,
       defaultEtherBalance: 500,
     },
     test: {

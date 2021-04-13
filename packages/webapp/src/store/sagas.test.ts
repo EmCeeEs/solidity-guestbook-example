@@ -7,11 +7,12 @@ import { USERS } from "./reducer.test";
 
 import assert from 'assert'
 
-const dummyDappInterface:DappInterface = {
+const dummyDappInterface: DappInterface = {
   getAccount: (): any => Promise.resolve(),
   getNetworkId: (): any => Promise.resolve(),
   getGuestbook: (): any => Promise.resolve(),
   getUsers: (): any => Promise.resolve(),
+  registerUser: (): any => Promise.resolve(),
 }
 
 describe('sagas', () => {

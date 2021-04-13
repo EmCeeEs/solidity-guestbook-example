@@ -45,12 +45,17 @@ export const createDappInterface = (web3: Web3) => {
     return R.map(createUser, users)
   }
 
+  const registerUser = async (user: User) => {
+    const guestbook = await getGuestbook()
+    await guestbook.methods.registerNewUser(user.nickName, user.country, user.city)
+  }
 
   return {
     getAccount,
     getNetworkId,
     getGuestbook,
     getUsers,
+    registerUser
   }
 }
 
