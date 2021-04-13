@@ -47,7 +47,12 @@ export const createDappInterface = (web3: Web3) => {
 
   const registerUser = async (user: User) => {
     const guestbook = await getGuestbook()
-    await guestbook.methods.registerNewUser(user.nickName, user.country, user.city)
+    const address = await getAccount()
+    try {
+      await guestbook.methods.registerNewUser(user.nickName, user.country, user.city).send({from: address})
+    } catch (error) {
+      console.error('error registering user', error)
+    }
   }
 
   return {

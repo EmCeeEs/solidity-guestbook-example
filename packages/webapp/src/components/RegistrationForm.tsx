@@ -1,7 +1,13 @@
 import React, {FC, useCallback, useState} from 'react'
 import {User} from "../store/reducer";
+import {connect} from "react-redux";
+import {Dispatch} from "redux"
 
-export const RegistrationForm: FC = () => {
+interface RegistrationFormProps {
+    registerUser: (user: User) => void
+}
+
+const RegistrationFormComp: FC<RegistrationFormProps> = ({registerUser}) => {
     const [user, setUser] = useState<User>({
         nickName: '',
         city: '',
@@ -10,9 +16,11 @@ export const RegistrationForm: FC = () => {
 
     const register = useCallback((event) => {
             event.preventDefault()
-            console.log(user)
+            console.log('before', user)
+            registerUser(user)
+            console.log('after', user)
         },
-        [user]
+        [user, registerUser]
     )
 
     const setNickName = useCallback(
@@ -47,3 +55,9 @@ export const RegistrationForm: FC = () => {
     )
 
 }
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    registerUser: (user: User) => dispatch({ type: 'REGISTER_USER', payload: user })
+})
+
+export const RegistrationForm = connect(null, mapDispatchToProps)(RegistrationFormComp)
